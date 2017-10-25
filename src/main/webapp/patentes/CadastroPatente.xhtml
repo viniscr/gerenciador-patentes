@@ -1,0 +1,199 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"> 
+   	
+   	<ui:define name="titulo">#{cadastroPatenteBean.editando ? 'Edição de patente' : 'Nova patente'}</ui:define>
+   	
+   	<ui:define name="corpo">
+   		
+   		<f:metadata>
+    		<o:viewParam name="patente" value="#{cadastroPatenteBean.patente}" />
+    	</f:metadata>
+   		
+   		<h:form style="margin-left: 5px" id="form">
+   		
+   			<h1>#{cadastroPatenteBean.editando ? 'Edição de patente' : 'Nova patente'}</h1>
+	    	
+	    	<p:messages autoUpdate="true" closable="true" />
+	    	
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:button value="Novo" outcome="/patentes/CadastroPatente" />
+	    			<p:commandButton value="Salvar" id="botaoSalvar"
+	    				action="#{cadastroPatenteBean.salvar()}" update="@form" 
+	    				disabled="#{cadastroPatenteBean.patente.finalizada}"/>
+	    			<p:commandButton value="Finalizar" id="botaoFinalizar" 
+	    				action="#{finalizacaoPatenteBean.finalizarPatente()}" process="@this" update="@form" 
+	    				disabled="#{cadastroPatenteBean.patente.naoFinalizavel}" />	
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+	    			<p:button value="Emitir PDF's" outcome="/relatorios/RelatorioPatentes">
+	    				<f:param name="relatorio" value="#{cadastroPatenteBean.patente.id}"/>
+	    			</p:button>
+	    			<p:button value="Pesquisa" outcome="/patentes/PesquisaPatentes" />
+	    		</p:toolbarGroup>
+	    	</p:toolbar>
+	    	
+	    	<h2>Tipo de Patente</h2>
+			<p:selectOneMenu id="tipoPatente" disabled="#{cadastroPatenteBean.patente.naoFinalizavel}"
+					value="#{cadastroPatenteBean.patente.tipo}">
+					<f:selectItem itemLabel="Selecione o tipo de Patente" />
+					<f:selectItems value="#{cadastroPatenteBean.tiposPatente}"
+						var="tipoPatente" itemValue="#{tipoPatente}"
+						itemLabel="#{tipoPatente.descricao}" />
+			</p:selectOneMenu>
+			
+			<h2>Autores</h2>
+		    <p:selectOneMenu id="autor" value="#{cadastroPatenteBean.autorAdicionado}" lazy="true" 
+		    	style="width:400px"	disabled="#{cadastroPatenteBean.patente.naoFinalizavel}">
+		    		
+		            <f:selectItem itemLabel="Selecione um usuário para incluir na lista de autores" itemValue="" />
+		            <f:selectItems value="#{cadastroPatenteBean.usuarios.usuariosdoSistema}" />
+        	</p:selectOneMenu>
+        	<br/>
+        	<p:commandButton value="Adicionar Autor" style="margin-top: 10px; margin-bottom: 10px" 
+        		action="#{cadastroPatenteBean.adicionarAutor()}" update="autoresTable" disabled="#{cadastroPatenteBean.patente.naoFinalizavel}"/>
+        	
+    	    <h3>Autores já cadastrados</h3>		
+	    	<p:dataTable id="autoresTable" style="width: 80%" value="#{cadastroPatenteBean.patente.autores}" var="autor">
+	    		<p:column headerText="Nome" style="width: 100px; text-align: left">
+	    			<h:outputText value="#{autor.nome}"/>
+	    		</p:column>  
+	    		
+	    		<p:column headerText="Qualificação" style="width:80px; text-align: left">
+	    			<h:outputText value="#{autor.qualificacao}"/>
+	    		</p:column>
+	    		
+	    		<p:column headerText="Email" style="width: 80px; text-align: left">
+	    			<h:outputText value="#{autor.email}"/>
+	    		</p:column>
+	    		
+	    		<p:column headerText="Telefone" style="width: 30px; text-align: left">
+	    			<h:outputText value="#{autor.telefone}"/>
+	    		</p:column>
+	    		
+				<p:column style="width: 15px; text-align: center">
+					<p:commandButton icon="ui-icon-trash" title="Excluir"/>
+				</p:column>
+				
+			</p:dataTable>    
+   			
+   			<h2>Titulo</h2>
+   			<p:inputText value="#{cadastroPatenteBean.patente.titulo}" style="width: 55%;" 
+   				disabled="#{cadastroPatenteBean.patente.naoFinalizavel}"/>
+   			
+   			<h2>Resumo</h2>
+   			<p:textEditor height="200" value="#{cadastroPatenteBean.patente.resumo}" widgetVar="editor1"
+   				readonly="#{cadastroPatenteBean.patente.naoFinalizavel}"/>
+   			
+    		
+    		<p:commandButton value="Pré-Visualizar" update="display" oncomplete="PF('dlg').show()" 
+    			icon="ui-icon-disk" disabled="#{cadastroPatenteBean.patente.naoFinalizavel}"/>
+    		
+    		<h2>Relatório Descritivo</h2>
+    		<p:textEditor height="200" value="#{cadastroPatenteBean.patente.relatorio}" widgetVar="editor2"
+    			readonly="#{cadastroPatenteBean.patente.naoFinalizavel}"/>
+    		
+    		<p:commandButton value="Pré-Visualizar" update="display" oncomplete="PF('dlg').show()" 
+    			icon="ui-icon-disk" disabled="#{cadastroPatenteBean.patente.naoFinalizavel}"/>
+    		
+    		<h2>Quadro Reivindicatório</h2>
+    		<p:textEditor height="200" value="#{cadastroPatenteBean.patente.reivindicacoes}"  widgetVar="editor3" 
+    				readonly="#{cadastroPatenteBean.patente.finalizada}" />
+    		
+    		<p:commandButton value="Pré-Visualizar" update="display" oncomplete="PF('dlg').show()" 
+    			icon="ui-icon-disk" disabled="#{cadastroPatenteBean.patente.naoFinalizavel}"/>
+    		
+    		<p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade">
+        	<p:outputPanel id="display">
+            	<h3 style="margin-top:0">Resumo</h3>
+            	<h:outputText value="#{cadastroPatenteBean.patente.resumo}" escape="false" />
+ 
+            	<h3>Relatorio</h3>
+            	<h:outputText value="#{cadastroPatenteBean.patente.relatorio}" escape="false" />
+ 
+            	<h3>Reivindicacoes</h3>
+            	<h:outputText value="#{cadastroPatenteBean.patente.reivindicacoes}" escape="false" />
+            	
+        	</p:outputPanel>
+    		</p:dialog>
+    		
+    		<h2>Imagens/Desenhos</h2>
+
+			<p:fileUpload fileUploadListener="#{cadastroPatenteBean.adiconarImagem}" mode="advanced" 
+ 				sequential="true" sizeLimit="10000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="imagensTable" 
+ 				process="@this" disabled="#{cadastroPatenteBean.patente.naoFinalizavel}"/>
+ 			
+ 			<h3>Imagens Cadastradas</h3>
+ 			 			
+ 			<p:dataTable id="imagensTable" value="#{cadastroPatenteBean.patente.imagens}" var="imagem"
+	    		style="margin-top: 20px" emptyMessage="Nenhuma Imagem Cadastrada" rows="5" paginator="true" 
+	    		paginatorAlwaysVisible="false" paginatorPosition="bottom" styleClass="grid-imagens">
+	    	
+	    		<p:column headerText="Código" style="text-align: center; width: 1px">
+	    			<h:outputText value="#{cadastroPatenteBean.patente.imagens.indexOf(imagem)+1}" />
+	    		</p:column>
+	    		<p:column headerText="Descrição" style="text-align: center; width: 100px">
+	    			<h:outputText value="#{imagem.descricao}" />
+	    		</p:column>
+	    		<p:column style="width: 1px; text-align: center">
+	    			<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
+	    					process="@this" update=":form:confirmacaoExclusaoDialog" disabled="#{cadastroPatenteBean.patente.naoFinalizavel}">
+	    				<f:setPropertyActionListener target="#{cadastroPatenteBean.imagemSelecionada}" 
+	    					value="#{imagem}" />
+	    			</p:commandButton>
+	    		</p:column>
+	    	</p:dataTable>
+	    	
+	    	<p:confirmDialog header="Exclusão de Imagem" message="Tem certeza que deseja excluir a imagem selecionada?" 
+	    		widgetVar="confirmacaoExclusao" id="confirmacaoExclusaoDialog">	    	
+	    		<p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
+	    		<p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
+	    			action="#{cadastroPatenteBean.removeImagem()}" process="@this"
+	    			update=":form:imagensTable" id="yesButton" />
+	    	</p:confirmDialog>
+	    	
+	    	<p:dialog header="Cadastro Autor" widgetVar="cadastroAutor"
+				draggable="false" resizable="true" modal="true">
+
+				<h3>Cadastro de Autor</h3>
+				<h:panelGroup id="inclusaoPanel">
+					<p:panelGrid columnClasses="rotulo, campo-autor" columns="2">
+
+						<p:outputLabel for="nome" value="Nome" />
+						<p:inputText id="nome" size="50"/>
+
+						<p:outputLabel for="qualificacao" value="Qualificação" />
+						<p:inputText id="qualificacao" size="30"/>
+
+						<p:outputLabel for="documento" value="CPF/CNPJ" />
+						<p:inputText id="documento" size="30"/>
+
+						<p:outputLabel for="endereco" value="Endereço Completo" />
+						<p:inputText id="endereco" size="80"/>
+
+						<p:outputLabel for="telefone" value="Telefone" />
+						<p:inputText id="telefone" size="30"/>
+
+						<p:outputLabel for="fax" value="Fax" />
+						<p:inputText id="fax" size="30"/>
+						
+						<p:outputLabel for="email" value="Email" />
+						<p:inputText id="email" size="30"/>
+						
+					</p:panelGrid>
+					<p:commandButton value="Incluir Autor" style="margin-top: 10px;"/>
+				
+				</h:panelGroup>
+			</p:dialog>
+			
+    		
+   		</h:form>
+   		
+   	</ui:define>      
+       
+</ui:composition>

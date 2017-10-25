@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+		<title><ui:insert name="titulo">Sistema de Registro de Patentes</ui:insert></title>
+		<h:outputScript library="js" name="jquery.maskMoney.js"/>
+		<h:outputStylesheet library="css"  name="sistema.css"></h:outputStylesheet>
+	</h:head>
+	 
+	<h:body>
+		<p:ajaxStatus styleClass="ajax-status" onsuccess="configurarMoeda()">
+			<f:facet name="start">
+				<h:graphicImage library="images" name="loading.gif"/>
+			</f:facet>
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
+		 
+		<header>
+			<div style="float: left; margin-left: 8px; width: 1000px;">
+				<h:graphicImage library="images" name="fa-university.png" style="float: left; margin-right: 5px; margin-top: 10px;"/>
+				
+				<span style="float: left;  line-height: 45px;">
+					Universidade Federal do Vale do São Francisco
+				</span>
+				
+				<h:outputLabel value="Sistema de Gerenciamento de Patentes" class="titulo-sistema"/>
+				
+			</div>
+			
+			<div style="float: right; margin-right: 110px" class="form-menu">
+				<span style="float: left; height: 30px; line-height: 30px; margin-right: 60px">
+					Olá, Usuário!
+				</span>
+				<h:form style="display: inline-block">
+					<p:menubar styleClass="menu-sistema">
+						<p:submenu label="Usuário">
+							<p:menuitem value="Alterar Dados" outcome="/usuarios/DadosUsuario"/>
+							<p:separator/>
+							<p:menuitem value="Alterar Senha"/>
+						</p:submenu>
+						<p:submenu label="Pantentes">
+							<p:menuitem value="Minhas Patentes" outcome="/patentes/PesquisaPatentes"/>
+							<p:separator/>
+							<p:menuitem value="Nova Patente" outcome="/patentes/CadastroPatente"/>
+						</p:submenu> 
+						<p:menuitem value="Sair" outcome="/Login"/>
+					</p:menubar>
+				</h:form>
+			</div>
+			<div style="clear: both"></div>
+		</header>
+		
+		<div id="conteudo">
+		<ui:insert name="corpo"/>
+		
+		</div>
+		
+		<p:separator style="margin-top: 20px"></p:separator>
+		
+		<footer style="text-align: center">
+			Sistema de Gerenciamento de Patentes
+			<br />
+			<br />
+			Desenvolvido por NIT- UNIVASF
+			<a href="http://univasf.edu.br" target="_blank">nitunivasf.wixsite.com/nitunivasf</a>
+		</footer>
+		
+		<script>
+			function configurarMoeda(){
+				$(".moeda").maskMoney({ decimal: ",", thousands: ".", allowZero: true});
+			}
+
+			$(document).ready(function(){
+				configurarMoeda();
+			});
+		</script>
+		 
+	</h:body>
+
+</html>

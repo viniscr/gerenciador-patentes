@@ -1,0 +1,71 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Pesquisa Patentes</ui:define>
+    
+    <ui:define name="corpo">
+    	<h:form id="frmPesquisa">
+	    	<h1>Minhas Patentes</h1>
+	    	
+	    	<p:messages autoUpdate="true" closable="true" />
+	    	
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:commandButton value="Pesquisar" action="#{pesquisaPatentesBean.pesquisar()}" 
+	    				update="@form"/>
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+	    			<p:button value="Nova Patente" outcome="/patentes/CadastroPatente"/>
+	    		</p:toolbarGroup>
+	    	</p:toolbar>
+	    	
+	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+	    			columnClasses="rotulo, campo">
+	    		<p:outputLabel value="Código" for="codigo"/>
+	    		<p:inputText id="codigo" size="20" value="#{pesquisaPatentesBean.filtro.id}"/>
+	    		
+	    		<p:outputLabel value="Título" for="nome"/>
+	    		<p:inputText id="nome" size="60" value="#{pesquisaPatentesBean.filtro.titulo}"/>
+	    		
+	    	</p:panelGrid>
+	    	
+	    	<p:dataTable id="patentesTable" value="#{pesquisaPatentesBean.patentesFiltradas}" var="patente"
+	    		style="margin-top: 20px" emptyMessage="Nenhuma Patente Cadastrada" rows="20" paginator="true" 
+	    		paginatorAlwaysVisible="false" paginatorPosition="bottom">
+	    	
+	    		<p:column headerText="Código" style="text-align: center; width: 100px">
+	    			<h:outputText value="#{pesquisaPatentesBean.patentesFiltradas.indexOf(patente)+1}" />
+	    		</p:column>
+	    		<p:column headerText="Título">
+	    			<h:outputText value="#{patente.titulo}" />
+	    		</p:column>
+	    		<p:column headerText="Status" style="width: 250px">
+	    			<h:outputText value="#{patente.status.descricao}" />
+	    		</p:column>
+	    		<p:column style="width: 100px; text-align: center">
+	    			<p:button outcome="/patentes/CadastroPatente" icon="ui-icon-pencil" title="Editar">
+	    				<f:param name="patente" value="#{patente.id}" />
+	    			</p:button>
+	    			<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
+	    					process="@this" update=":frmPesquisa:confirmacaoExclusaoDialog">
+	    				<f:setPropertyActionListener target="#{pesquisaPatentesBean.patenteSelecionada}" 
+	    					value="#{patente}" />
+	    			</p:commandButton>
+	    		</p:column>
+	    	</p:dataTable>
+	    	
+	    	<p:confirmDialog header="Exclusão de Patente" message="Tem certeza que deseja excluir a patente?" 
+	    		widgetVar="confirmacaoExclusao" id="confirmacaoExclusaoDialog">	    	
+	    		<p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
+	    		<p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
+	    			action="#{pesquisaPatentesBean.excluir}" process="@this"
+	    			update=":frmPesquisa:patentesTable" id="yesButton" />
+	    	</p:confirmDialog>
+	    	
+    	</h:form>
+    </ui:define>
+</ui:composition>

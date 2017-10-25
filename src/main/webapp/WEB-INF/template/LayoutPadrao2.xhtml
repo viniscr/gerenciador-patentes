@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+		<title><ui:insert name="titulo">Sistema Gerenciador de Elaboração de Patente</ui:insert></title>
+		<h:outputStylesheet library="css"  name="sistema.css"></h:outputStylesheet>
+	</h:head>
+	 
+	<h:body>
+		<p:ajaxStatus styleClass="ajax-status">
+			<f:facet name="start">
+				<h:graphicImage library="images" name="loading.gif"/>
+			</f:facet>
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
+		 
+		<header>
+			<div >				
+				<h:outputLabel id="label-titulo" value="Sistema Gerenciador de Elaboração de Patente"/>
+			</div>
+			
+			<div style="clear: both"></div>
+		</header>
+		
+		<div id="conteudo">
+		<ui:insert name="corpo"/>
+		
+		</div>
+		
+		<p:separator style="margin-top: 20px"></p:separator>
+		
+		<footer style="text-align: center">
+			Sistema Gerenciador de Elaboração de Patente
+			<br />
+			<br />
+			Desenvolvido por NIT- UNIVASF
+			<a href="http://univasf.edu.br" target="_blank">nitunivasf.wixsite.com/nitunivasf</a>
+		</footer>
+		
+		 
+	</h:body>
+
+</html>

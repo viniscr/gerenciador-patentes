@@ -1,0 +1,68 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+   	
+   	<ui:define name="titulo">Novo Usuário</ui:define>
+   	
+   	<ui:define name="corpo">
+   		<h1 style="margin-top: 20px;">Novo Usuário</h1>
+   		
+   		<p:panelGrid columns="4" id="painel" style="width:60%; margin-top:20px" columnClasses="rotulo-usuario, campo-usuario, rotulo-usuario, campo-usuario">
+   			<p:outputLabel value="Nome" for="nome"/>
+   			<p:inputText id="nome" size="60" maxlenght="60"/>
+   			
+   			<p:outputLabel value="CPF" for="cpf"/>
+   			<p:inputText id="cpf" size="20" maxlenght="11"/>
+   			
+   			<p:outputLabel value="Senha" for="senha"/>
+   			<p:password id="senha" size="20" maxlength="16"/>
+   			
+   			<p:outputLabel value="Confirma Senha" for="senha-confirma"/>
+   			<p:password id="senha-confirma" size="20" maxlength="16"/>
+   			
+   			<p:outputLabel value="Campus" for="campus"/>
+   			<p:selectOneMenu id="campus">
+   				<f:selectItem itemLabel="Selecione o campus"/>
+   				<f:selectItem itemLabel="Campus Juazeiro"/>
+   				<f:selectItem itemLabel="Campus Petrolina - Centro"/>
+   				<f:selectItem itemLabel="Campus Petrolina - Ciências Agrárias"/>
+   				<f:selectItem itemLabel="Campus Senhor do Bonfim"/>
+   				<f:selectItem itemLabel="Campus Paulo Afonso"/>
+   			</p:selectOneMenu>
+   			
+   			<p:outputLabel value="Cargo/Função" for="cargo"/>
+   			<p:selectOneMenu id="cargo">
+   				<f:selectItem itemLabel="Selecione o cargo"/>
+   				<f:selectItem itemLabel="Professor"/>
+   				<f:selectItem itemLabel="Estudante"/>
+   				<f:selectItem itemLabel="Funcionário"/>
+   			</p:selectOneMenu>
+   			
+   			<p:outputLabel value="Telefone" for="telefone"/>
+   			<p:inputText id="telefone" size="11" maxlenght="11"/>
+   			
+   			<p:outputLabel value="Curriculo Lattes" for="lattes"/>
+   			<p:inputText id="lattes" size="30" maxlenght="30"/>
+   			
+   			<p:outputLabel value="Data de Nascimento" for="nascimento"/>
+   			<p:inputText id="nascimento" size="8" maxlenght="8"/>
+   			
+   			<p:outputLabel value="Sexo" for="sexo"/>
+   			<p:selectOneRadio id="sexo">
+   				<f:selectItem itemLabel="Masculino"/>
+   				<f:selectItem itemLabel="Feminino"/>
+   			</p:selectOneRadio>
+   			
+   			
+   		</p:panelGrid>
+   				<p:button value="Cancelar" outcome="/Login" style="margin-left: 768px; margin-top: 10px"/>
+   				<p:commandButton value="Cadastrar" id="botaoCadastrar" style="margin-left: 10px; margin-top: 10px"/>
+
+   		
+   	</ui:define>  
+      
+       
+</ui:composition>

@@ -1,0 +1,64 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+   	
+   	<ui:define name="titulo">Nova Patente</ui:define>
+   	
+   	<ui:define name="corpo">
+   		<h1 style="margin-top: 20px">Nova Patente</h1>
+   		
+   		<p:separator></p:separator>
+   		
+   		<h:form style="margin-left: 50px">
+   			<h2>Resumo</h2>
+   			<p:textEditor height="200" value="#{editorView.resumo}" widgetVar="editor1"/>
+    		
+    		<p:commandButton value="Visualizar" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
+    		<p:commandButton value="Limpar" type="button" onclick="PF('editor1').clear();" icon="ui-icon-close" />
+    		
+    		<h2>Relatório Descritivo</h2>
+    		<p:textEditor height="200" value="#{editorView.relatorio}" widgetVar="editor2"/>
+    		
+    		<p:commandButton value="Visualizar" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
+    		<p:commandButton value="Limpar" type="button" onclick="PF('editor2').clear();" icon="ui-icon-close" />
+    		
+    		
+    		<h2>Quadro Reivindicatório</h2>
+    		<p:textEditor height="200" widgetVar="editor3"></p:textEditor>
+    		
+    		<p:commandButton value="Visualizar" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
+    		<p:commandButton value="Limpar" type="button" onclick="PF('editor3').clear();" icon="ui-icon-close" />
+    		
+    		<p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade">
+        	<p:outputPanel id="display">
+            	<h3 style="margin-top:0">Resumo</h3>
+            	<h:outputText value="#{editorView.resumo}" escape="false" />
+ 
+            	<h3>Relatorio</h3>
+            	<h:outputText value="#{editorView.relatorio}" escape="false" />
+ 
+            	<h3>Reivindicacoes</h3>
+            	<h:outputText value="#{editorView.reivindicacoes}" escape="false" />
+            	
+        	</p:outputPanel>
+    		</p:dialog>
+    		
+    		<h2>Imagens/Desenhos</h2>
+    		<h:form>
+    		
+    			<p:fileUpload mode="advanced" dragDropSupport="false" multiple="true" update="messages" 
+    				sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+ 
+    			<p:growl id="messages" showDetail="true" />
+			</h:form>
+   		</h:form>
+   		
+
+   		
+   	</ui:define>  
+      
+       
+</ui:composition>

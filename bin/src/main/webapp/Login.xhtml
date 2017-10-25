@@ -1,0 +1,42 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+   	
+   	<ui:define name="titulo">Login</ui:define>
+
+	<ui:define name="corpo">
+		
+		
+		<h:body> 
+			<div id="login-dialog">
+				<h1>Login</h1>
+				<h:form styleClass="form-login">
+					<h:panelGrid columns="2" styleClass="grid-login">
+						<p:outputLabel value="E-mail" />
+						<p:inputText size="30" />
+						
+						<p:outputLabel value="Senha" />
+						<p:password size="30" />
+						
+						<p:outputLabel value="Instituição" style="margin-top: 5px;"/>
+						<p:selectOneMenu id="instituicao" style="margin-top: 5px; min-width: 220px;" >
+            				<f:selectItem itemLabel="Selecione" />
+            				<f:selectItem itemLabel="UNIVASF" />
+            				<f:selectItem itemLabel="FACAPE" />            			
+       					</p:selectOneMenu>
+						
+						<h:panelGroup/>
+								
+					</h:panelGrid>
+					
+					<p:button value = "Cadastrar-se" style="margin-top: 10px; margin-left: 115px;" outcome="/usuarios/CadastroUsuario"/>
+					<p:button value="Login" style = "margin-top:10px; margin-left: 15px" outcome="/Home" />
+						
+				</h:form>
+			</div>
+		</h:body>
+	</ui:define> 
+</ui:composition>

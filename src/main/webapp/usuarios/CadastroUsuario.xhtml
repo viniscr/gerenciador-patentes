@@ -1,0 +1,96 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao2.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo">Cadastro de Usuário</ui:define>
+
+	<ui:define name="corpo">
+
+
+		<f:metadata>
+			<o:viewParam name="usuario" value="#{cadastroUsuarioBean.usuario}" />
+			<f:event listener="#{cadastroUsuarioBean.inicializar()}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+
+		<h:form id="frm">
+			<h1>Cadastro de Usuário</h1>
+
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:button value="Limpar" outcome="/usuarios/CadastroUsuario" />
+					<p:separator />
+					<p:button value="Voltar a Página de Login" outcome="/Login"/>
+					<p:separator />
+					<p:commandButton value="Finalizar Cadastro"
+						action="#{cadastroUsuarioBean.cadastrar()}" update="@form"
+						id="botaoSalvar" />
+				</p:toolbarGroup>
+
+			</p:toolbar>
+
+			<p:panelGrid columns="4" id="painel"
+				style="width:60%; margin-top:20px"
+				columnClasses="rotulo-usuario, campo-usuario, rotulo-usuario, campo-usuario">
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" size="60" maxlenght="60"
+					value="#{cadastroUsuarioBean.usuario.nome}" />
+
+				<p:outputLabel value="Email" for="email" />
+				<p:inputText id="email" size="30" maxlenght="50"
+					value="#{cadastroUsuarioBean.usuario.email}" />
+
+				<p:outputLabel value="Senha" for="senha" rendered="#{!cadastroUsuarioBean.editando}"/>
+				<p:password id="senha" size="20" maxlength="16"
+					value="#{cadastroUsuarioBean.usuario.senha}" rendered="#{!cadastroUsuarioBean.editando}"/>
+
+				<p:outputLabel value="Confirma Senha" for="confirmaSenha" rendered="#{!cadastroUsuarioBean.editando}"/>
+				<p:password id="confirmaSenha" size="20" maxlength="16" 
+					value="#{cadastroUsuarioBean.confirmaSenha}" rendered="#{!cadastroUsuarioBean.editando}"/>
+
+				<p:outputLabel value="Vinculação" for="vinculo" />
+				<p:selectOneMenu id="vinculo"
+					value="#{cadastroUsuarioBean.usuario.vinculo}">
+					<f:selectItem itemLabel="Selecione o seu Vínculo" />
+					<f:selectItems value="#{cadastroUsuarioBean.vinculos}"
+						var="vinculo" itemValue="#{vinculo}"
+						itemLabel="#{vinculo.descricao}" />
+
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Qualificação" for="qualificacao" />
+				<p:inputText id="qualificacao" size="40" maxlenght="50"
+					value="#{cadastroUsuarioBean.usuario.qualificacao}" />
+				
+				<p:outputLabel value="CPF/CNPJ" for="documento" />
+				<p:inputText id="documento" size="20" maxlenght="18"
+					value="#{cadastroUsuarioBean.usuario.documento}" />
+
+				<p:outputLabel value="Endereço Completo" for="endereco" />
+				<p:inputText id="endereco" size="40" maxlenght="70"
+					value="#{cadastroUsuarioBean.usuario.endereco}" />
+
+				<p:outputLabel value="CEP" for="cep" />
+				<p:inputMask  id="cep" value="#{cadastroUsuarioBean.usuario.cep}"
+					mask="99999-999"/>
+				
+				<p:outputLabel value="Telefone" for="telefone" />
+				<p:inputText id="telefone" size="30" placeholder="(XX) 9999-9999" value="#{cadastroUsuarioBean.usuario}" />
+				
+				<p:outputLabel value="Fax" for="fax" />
+				<p:inputText  id="fax" value="#{cadastroUsuarioBean.usuario.fax}"
+						placeholder="(XX) 9999-9999" />
+				
+
+								
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml">
+		
+		<ui:define name="titulo">Recuperação de Senha</ui:define>
+		
+		<ui:define name="corpo">
+			<h:body> 
+					<h1>Recuperar Senha</h1>
+					<p:separator/>
+					<h:outputText value="Uma nova senha será enviada ao seu email." style="font-size: 15px;" />
+					<br></br>
+					<h:outputText value = "Confirme o seu e-mail abaixo." style="font-size: 15px" />
+					<h:form styleClass="form-login">
+						<h:panelGrid columns="2" styleClass="grid-login">
+							<p:outputLabel value="E-mail" />
+							<p:inputText size="30" />
+							
+							<h:panelGroup/>
+							<p:commandButton value ="Recuperar" style="margin-top: 10px; margin-left: 155px;"/>
+						</h:panelGrid>
+						
+							
+					</h:form>
+			</h:body>
+		</ui:define>
+		
+	</ui:composition>
+</html>
